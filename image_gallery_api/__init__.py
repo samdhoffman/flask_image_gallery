@@ -9,9 +9,6 @@ import os
 # Init app
 app = Flask(__name__)
 
-# Init marshmallow
-ma = Marshmallow(app)
-
 # setup sqlalchemy db uri
 # make sure that we can locate db file in the current dir
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -21,6 +18,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Init db
 db = SQLAlchemy(app)
+
+# Init marshmallow (must be initialized after SQLAlchemy)
+ma = Marshmallow(app)
 
 # have to import below app and db declaration to avoid circular imports
 from image_gallery_api import routes
