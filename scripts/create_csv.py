@@ -1,6 +1,6 @@
+# This script can be used to create csv file from pastebin images raw string data
 import csv
 
-# Used to create csv file from pastebin images raw string data
 images = """https://picsum.photos/id/12/300/200
 https://picsum.photos/id/434/300/200
 https://picsum.photos/id/966/300/200
@@ -54,32 +54,10 @@ https://picsum.photos/id/891/300/300"""
 
 data = images.splitlines()
 
-with open('/Users/sam/Sites/image_gallery_api/data/images.csv', 'w', newline='') as csvfile:
+with open('./data/images.csv', 'w', newline='') as csvfile:
     header = ['images']
     csv_writer = csv.writer(csvfile)
     csv_writer.writerow(header)
 
     for image in data:
         csv_writer.writerow([image])
-
-
-# Used in python interactive mode to add csv images to db
-with open('/Users/sam/Sites/image_gallery_api/data/images.csv','r', newline='') as csvfile:
-    next(csvfile)
-    
-    csv_reader = csv.reader(csvfile)
-    
-    START_INDEX = 25
-    
-    for row in csv_reader:
-        cur_img_url = row[0]
-        vals = cur_img_url[START_INDEX:]
-        
-        # get id, width, and height from url
-        img_data = tuple([int(x) for x in vals.split('/')])
-        
-        img_for_db = Image(img_id=img_data[0],width=img_data[1],height=img_data[2],url=cur_img_url)
-        
-        # db available in interacitve mode after importing
-        db.session.add(img_for_db)
-        db.session.commit()
