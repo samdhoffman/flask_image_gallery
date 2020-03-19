@@ -17,7 +17,7 @@ def get_images():
   page = request.args.get('page', 1, type=int)
   images = Image.query.paginate(page=page)
   result = images_schema.dump(images.items)
-  return jsonify(result)
+  return jsonify(images=result, pages=images.pages)
 
 # Get Single Image
 @app.route('/image/<id>', methods=['GET'])
@@ -31,7 +31,7 @@ def get_images_by_dimension(width=300, height=200):
   page = request.args.get('page', 1, type=int)
   images = Image.query.filter_by(width=width, height=height).paginate(page=page)
   result = images_schema.dump(images.items)
-  return jsonify(result)
+  return jsonify(images=result, pages=images.pages)
 
 # Create an Image --> prob not needed but wanted to display functionality
 @app.route('/image', methods=['POST'])
