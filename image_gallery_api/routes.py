@@ -2,7 +2,7 @@ from flask import request, jsonify
 from image_gallery_api import app, ma, db
 from image_gallery_api.models import Image
 
-# Image Schema
+# Image Schema --> defines our output format for Marshmallow serialization
 class ImageSchema(ma.Schema):
   class Meta:
     fields = ('id', 'img_id', 'width', 'height', 'url')
@@ -11,11 +11,12 @@ class ImageSchema(ma.Schema):
 image_schema = ImageSchema()
 images_schema = ImageSchema(many=True)
 
-# Get All Images
+# Get All Images Paginated
 @app.route('/image', methods=['GET'])
 def get_images():
-  all_images = Image.query.all()
-  result = images_schema.dump(all_images)
+  page = request.args.get('page', 1, type=int)
+  images = Image.query.paginate(page=page)
+  result = images_schema.dump(images.items)
   return jsonify(result)
 
 # Get Single Image
@@ -24,7 +25,15 @@ def get_image(id):
   image = Image.query.get_or_404(id)
   return image_schema.jsonify(image)
 
-# Create an Image
+# Get Images Filtered By Dimension
+@app.route('/image/<width>/<height>', methods=['GET'])
+def get_images_by_dimension(width=300, height=200):
+  page = request.args.get('page', 1, type=int)
+  images = Image.query.filter_by(width=width, height=height).paginate(page=page)
+  result = images_schema.dump(images.items)
+  return jsonify(result)
+
+# Create an Image --> prob not needed but wanted to display functionality
 @app.route('/image', methods=['POST'])
 def add_image():
   img_id = request.json['img_id']
@@ -39,7 +48,7 @@ def add_image():
   
   return image_schema.jsonify(new_image)
 
-# Update an Image
+# Update an Image --> prob not needed but wanted to display functionality
 @app.route('/image/<id>', methods=['PUT'])
 def update_image(id):
   image = Image.query.get_or_404(id)
@@ -58,7 +67,7 @@ def update_image(id):
   
   return image_schema.jsonify(image)
 
-# Delte Image
+# Delete Image --> prob not needed but wanted to display functionality
 @app.route('/image/<id>', methods=['DELETE'])
 def delete_image(id):
   image = Image.query.get_or_404(id)
