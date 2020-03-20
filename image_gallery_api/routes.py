@@ -1,6 +1,7 @@
 from flask import request, jsonify
 from image_gallery_api import app, ma, db
 from image_gallery_api.models import Image
+from image_gallery_api.utils import get_filter_queries
 
 # Image Schema --> defines our output format for Marshmallow serialization
 class ImageSchema(ma.Schema):
@@ -84,15 +85,3 @@ def get_dimension_options():
   heights = [x.height for x in db.session.query(Image.height).distinct().order_by(Image.height.asc())]
 
   return jsonify(widths=widths, heights=heights)
-
-def get_filter_queries(args):
-  queries = []
-
-  if args['width'] == "*":
-    queries.append(Image.height == args['height'])
-  elif args['height'] == "*":
-    queries.append(Image.width == args['width'])
-  else:
-    queries.extend([Image.width == args['width'], Image.height == args['height']])
-
-  return queries
