@@ -26,10 +26,11 @@ def get_image(id):
   return image_schema.jsonify(image)
 
 # Get Images Filtered By Dimension
-@app.route('/image/<width>/<height>', methods=['GET'])
-def get_images_by_dimension(width=300, height=200):
+@app.route('/image/filter', methods=['GET'])
+def get_images_by_dimension():
+  queries = get_filter_queries(request.args)
   page = request.args.get('page', 1, type=int)
-  images = Image.query.filter_by(width=width, height=height).paginate(page=page)
+  images = Image.query.filter(*queries).paginate(page=page)
   result = images_schema.dump(images.items)
   return jsonify(images=result, pages=images.pages)
 
@@ -83,3 +84,15 @@ def get_dimension_options():
   heights = [x.height for x in db.session.query(Image.height).distinct().order_by(Image.height.asc())]
 
   return jsonify(widths=widths, heights=heights)
+
+def get_filter_queries(args):
+  queries = []
+
+  if args['width'] == "*":
+    queries.append(Image.height == args['height'])
+  elif args['height'] == "*":
+    queries.append(Image.width == args['width'])
+  else:
+    queries.extend(Image.width == args['width'], Image.height == args['height'])
+
+  return queries
