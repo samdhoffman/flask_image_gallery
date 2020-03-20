@@ -75,3 +75,11 @@ def delete_image(id):
   db.session.commit()
 
   return image_schema.jsonify(image)
+
+# get width and height dimension options for filtering
+@app.route('/dimensions', methods=['GET'])
+def get_dimension_options():
+  widths = [x.width for x in db.session.query(Image.width).distinct().all()]
+  heights = [x.height for x in db.session.query(Image.height).distinct().all()]
+
+  return jsonify(widths=widths, heights=heights)
