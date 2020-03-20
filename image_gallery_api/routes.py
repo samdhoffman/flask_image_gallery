@@ -13,7 +13,7 @@ image_schema = ImageSchema()
 images_schema = ImageSchema(many=True)
 
 # Get All Images Paginated
-@app.route('/image', methods=['GET'])
+@app.route('/images', methods=['GET'])
 def get_images():
   page = request.args.get('page', 1, type=int)
   images = Image.query.paginate(page=page)
@@ -21,13 +21,13 @@ def get_images():
   return jsonify(images=result, pages=images.pages)
 
 # Get Single Image
-@app.route('/image/<id>', methods=['GET'])
+@app.route('/images/<id>', methods=['GET'])
 def get_image(id):
   image = Image.query.get_or_404(id)
   return image_schema.jsonify(image)
 
 # Get Images Filtered By Dimension
-@app.route('/image/filter', methods=['GET'])
+@app.route('/images/filter', methods=['GET'])
 def get_images_by_dimension():
   queries = get_filter_queries(request.args)
   page = request.args.get('page', 1, type=int)
@@ -36,7 +36,7 @@ def get_images_by_dimension():
   return jsonify(images=result, pages=images.pages)
 
 # Create an Image --> prob not needed but wanted to display functionality
-@app.route('/image', methods=['POST'])
+@app.route('/images', methods=['POST'])
 def add_image():
   img_id = request.json['img_id']
   width = request.json['width']
@@ -51,7 +51,7 @@ def add_image():
   return image_schema.jsonify(new_image)
 
 # Update an Image --> prob not needed but wanted to display functionality
-@app.route('/image/<id>', methods=['PUT'])
+@app.route('/images/<id>', methods=['PUT'])
 def update_image(id):
   image = Image.query.get_or_404(id)
 
@@ -70,7 +70,7 @@ def update_image(id):
   return image_schema.jsonify(image)
 
 # Delete Image --> prob not needed but wanted to display functionality
-@app.route('/image/<id>', methods=['DELETE'])
+@app.route('/images/<id>', methods=['DELETE'])
 def delete_image(id):
   image = Image.query.get_or_404(id)
   db.session.delete(image)
