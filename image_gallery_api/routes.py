@@ -93,6 +93,6 @@ def get_filter_queries(args):
   elif args['height'] == "*":
     queries.append(Image.width == args['width'])
   else:
-    queries.extend(Image.width == args['width'], Image.height == args['height'])
+    queries.extend([Image.width == args['width'], Image.height == args['height']])
 
   return queries
