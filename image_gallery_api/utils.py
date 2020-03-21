@@ -3,11 +3,11 @@ from image_gallery_api.models import Image
 def get_filter_queries(args):
   queries = []
 
-  if args['width'] == "*":
-    queries.append(Image.height == args['height'])
-  elif args['height'] == "*":
-    queries.append(Image.width == args['width'])
+  if args.get('width') == "*":
+    queries.append(Image.height == args.get('height'))
+  elif args.get('height') == "*":
+    queries.append(Image.width == args.get('width'))
   else:
-    queries.extend([Image.width == args['width'], Image.height == args['height']])
+    queries.extend([Image.width == args.get('width'), Image.height == args.get('height')])
 
   return queries
