@@ -1,13 +1,16 @@
 from image_gallery_api.models import Image
 
 def get_filter_queries(args):
-  queries = []
+  queries = [] 
 
   if args.get('width') == "*":
-    queries.append(Image.height == args.get('height'))
-  elif args.get('height') == "*":
-    queries.append(Image.width == args.get('width'))
+    queries.append(Image.width)
   else:
-    queries.extend([Image.width == args.get('width'), Image.height == args.get('height')])
+    queries.append(Image.width == args.get('width'))
+  
+  if args.get('height') == "*":
+    queries.append(Image.height)
+  else:
+    queries.append(Image.height == args.get('height'))
 
   return queries
