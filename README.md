@@ -27,7 +27,7 @@ To be able to view the newly created data, make sure you set up the front end us
 # Available Routes
 * `/images`, Methods: `GET, POST`
   * Query params: `page=<page>`
-* `/images/<id>`, Methods: `GET, PUT`
+* `/images/<id>`, Methods: `GET, PUT, DELETE`
 * `/images/filter`, Methods: `GET`
   * Query params: `width=<num>&height=<num>`, `page=<page>`
 * `/dimensions`, Methods: `GET`
