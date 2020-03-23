@@ -23,3 +23,11 @@ This project has a complementary front end built with React that can be found at
 5. Run `python3 run.py` to start the server and you are ready to go!
 
 To be able to view the newly created data, make sure you set up the front end using the repository link above.
+
+# Available Routes
+* `/images`, Methods: `GET, POST`
+  * Query params: `page=<page>`
+* `/images/<id>`, Methods: `GET, PUT`
+* `/images/filter`, Methods: `GET`
+  * Query params: `width=<num>&height=<num>`, `page=<page>`
+* `/dimensions`, Methods: `GET`
