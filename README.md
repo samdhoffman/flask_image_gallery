@@ -8,7 +8,9 @@ This project has a complementary front end built with React that can be found at
 
 **Steps to Get Started**
 1. Clone the project
-2. Set up your database with the following steps:
+2. Install the project dependencies by running `pipenv install` in the root directory
+3. Activate your virtual environment by running `pipenv shell` in the root directory
+4. Set up your database with the following steps:
   * While in the project's root directory, enter python interactive mode in your terminal by entering `python3`
   * Enter the following commands:
     1. `from image_gallery_api import db` (this will create a db.sqlite file in the image_gallery_api directory)
@@ -18,9 +20,9 @@ This project has a complementary front end built with React that can be found at
    `from image_gallery_api.models import Image`
   * Exit interactive mode by typing `exit()`
   
-3. While still in the root directory, create the `images.csv` file by running `python3 scripts/create_csv.py`
-4. Populate the previously created database with the `images.csv` data by running `python3 scripts/db_insert.py`
-5. Run `python3 run.py` to start the server and you are ready to go!
+5. While still in the root directory, create the `images.csv` file by running `python3 scripts/create_csv.py`
+6. Populate the previously created database with the `images.csv` data by running `python3 scripts/db_insert.py`
+7. Run `python3 run.py` to start the server and you are ready to go!
 
 To be able to view the newly created data, make sure you set up the front end using the repository link above.
 
