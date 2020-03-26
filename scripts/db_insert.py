@@ -10,6 +10,7 @@ with open('./data/images.csv','r', newline='') as csvfile:
     
     csv_reader = csv.reader(csvfile)
     
+    # TODO: make dynamic
     START_INDEX = 25
     
     for row in csv_reader:
